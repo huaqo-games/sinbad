@@ -52,11 +52,6 @@ typedef enum {
 	SPEED_COUNT
 } playerSpeedID;
 
-typedef enum 
-{
-	FLYING,
-	BIRDS_TEX_COUNT
-} birdsTextureID;
 
 typedef enum 
 {
@@ -152,7 +147,32 @@ typedef struct
 	float rotation;
 } Player;
 
+typedef enum
+{
+	BOAT,
+	ENEMIES_TEX_COUNT
+} enemiesTextureID;
+
+#define MAX_ENEMIES 100
+
+typedef struct 
+{
+	int count;
+	Sprite sprite[MAX_ENEMIES];
+	Animation animation[MAX_ENEMIES];
+	Physics physics[MAX_ENEMIES];
+	bool arrived[MAX_ENEMIES];
+	Vector2 destPos[MAX_ENEMIES];
+} Enemies;
+
+typedef enum 
+{
+	FLYING,
+	BIRDS_TEX_COUNT
+} birdsTextureID;
+
 #define MAX_BIRDS 100
+
 typedef struct {
 	int count;
 	Sprite sprite[MAX_BIRDS];
@@ -176,6 +196,7 @@ typedef struct
     RenderTexture2D target;
     Floor floor;
   	Birds birds;
+	Enemies enemies;
 	Islands islands;
     Mouse mouse;
     Image image;
@@ -237,6 +258,10 @@ Player* GetPlayer(void);
 void CreatePlayer(void);
 void UpdatePlayer(void);
 void RenderPlayer(void);
+
+Enemies CreateEnemies(void);
+void UpdateEnemies(Enemies *enemies);
+void RenderEnemies(Enemies *enemies);
 
 Birds CreateBirds(void);
 void UpdateBirds(Birds *birds);

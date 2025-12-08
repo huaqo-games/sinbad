@@ -37,6 +37,7 @@ void InitGame(App *app)
   Player* player = GetPlayer();
   CreateCamera(player->physics.position, 10.0f);
   g->birds = CreateBirds();
+  g->enemies = CreateEnemies();
   g->islands = CreateIslands();
   g->floor = CreateFloor();
 
@@ -78,6 +79,7 @@ void UpdateGame(App *app)
     UpdateFloor(&g->floor);
     UpdatePlayer();
     UpdateBirds(&g->birds);
+	UpdateEnemies(&g->enemies);
 	UpdateIslands(&g->islands);
 }
 
@@ -86,6 +88,7 @@ void RenderComponents(App *app)
 	GameState *g = &app->game;
     RenderFloor(&g->floor);
     RenderPlayer();
+	RenderEnemies(&g->enemies);
     RenderBirds(&g->birds);
 	RenderIslands(&g->islands);
 }
