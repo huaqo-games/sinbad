@@ -70,8 +70,6 @@ void UpdateBirds(Birds *birds){
 		}
 		Vector2 dir = GetDirectionBetweenTwoVectors(birds->physics[i].position, birds->destPos[i]);
 		UpdatePhysics(&birds->physics[i], dir);
-		printf("birdsPos: %f, %f", birds->physics[i].position.x, birds->physics[i].position.y);
-		printf("cameraTarget: %f, %f",camera->target.x, camera->target.y );
 		UpdateSpriteDestRec(&birds->sprite[i], &birds->physics[i].position);
 		float rotation = Vector2ToRotation(dir);
 		UpdateSpriteRotation(&birds->sprite[i], rotation + 45.0f);
