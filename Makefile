@@ -35,7 +35,7 @@ ifeq ($(OS), Windows_NT)
 else
 	SRC = $(wildcard src/*.c)
 	TARGET = bin/osx/game
-	RAYLIB_FLAGS = $(shell pkg-config --libs --cflags raylib)
+	RAYLIB_FLAGS = $(shell pkg-config --libs --cflags raylib) -lm
 endif
 
 $(shell mkdir -p bin/osx bin/win)
