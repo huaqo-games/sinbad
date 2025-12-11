@@ -15,7 +15,6 @@ Rectangle GetCameraRectangle(void)
 	float viewHeight = 0.0f;
 	float viewX = 0.0f;
 	float viewY = 0.0f;
-	printf("\n CameraZoom: %f \n", camera->zoom);
 	if (camera->zoom < 0.5f)
 	{	
 		viewWidth = screenWidth;
