@@ -118,8 +118,8 @@ typedef struct {
 typedef struct 
 {
 	Button showFPS;
+	Button limitFPS;
 	Button soundtrackOn;
-
 } MenuSettings;
 
 
@@ -210,6 +210,7 @@ typedef struct {
 
 typedef struct {
     bool showFPS;
+	bool limitFPS;
 	bool soundtrackOn;
 } Flags;
 
@@ -239,7 +240,7 @@ void RenderMenuMain(MenuMain *m, Font *font, const char *title, Flags *flags);
 void CleanupMenuMain(MenuMain *m);
 
 void InitMenuSettings(MenuSettings *s);
-void UpdateMenuSettings(MenuSettings *s, MenuView *menuView, Flags *flags);
+void UpdateMenuSettings(MenuSettings *s, MenuView *menuView, State *state, Flags *flags);
 void RenderMenuSettings(MenuSettings *s, Flags *flags);
 void CleanupMenuSettings(MenuSettings *s);
 

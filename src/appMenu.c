@@ -18,7 +18,7 @@ void UpdateMenu(MenuState *m, State *state, Flags *flags)
 
 		case SETTINGS:
 		{
-			UpdateMenuSettings(&m->menuSettings, &m->menuView,  flags);
+			UpdateMenuSettings(&m->menuSettings, &m->menuView, state,  flags);
 		}break;
 		default: break;
 	}

@@ -56,8 +56,11 @@ void StartGame(App *app)
 void UpdateGame(App *app)
 {
 	GameState *g = &app->game;
-	
-    SetTargetFPS(0);
+	if (app->flags.limitFPS){
+		SetTargetFPS(60);
+	} else {
+		SetTargetFPS(0);
+	}
 
 	StartGame(app);
 
