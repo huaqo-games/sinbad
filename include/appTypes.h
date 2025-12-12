@@ -225,6 +225,13 @@ typedef struct {
     GameState game;
 } App;
 
+#define MAX_PROJECTILES 10
+typedef struct {
+	Physics physics[MAX_PROJECTILES];
+	bool active[MAX_PROJECTILES];
+	float radius[MAX_PROJECTILES];
+} Projectile;
+
 //FUNCTIONS//
 void InitLogo(LogoState *l);
 void UpdateLogo(LogoState *l, View *currentView, bool *running);
