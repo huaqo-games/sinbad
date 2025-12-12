@@ -1,4 +1,4 @@
-#include "appTypes.h"
+#include "app.h"
 
 
 const TextureAsset menuTextureAssets[MENU_TEX_COUNT] = {

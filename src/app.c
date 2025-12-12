@@ -1,6 +1,4 @@
-#include <engine.h>
-
-#include "appTypes.h"
+#include "app.h"
 
 void ConfigApp(App* app){
     InitConfig(&app->config, "config/config.ini");

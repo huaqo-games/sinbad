@@ -1,11 +1,12 @@
-#include "appTypes.h"
-#include "engine.h"
+#include "app.h"
+
+
 
 const TextureAsset enemiesTextureAssets[ENEMIES_TEX_COUNT] = {
 	{"assets/ship_start.png", 16.0f, 16.0f, 90.0f}
 };
 
-Enemies CreateEnemies(void){
+Enemies CreateEnemies(void){	
 	Enemies enemies = {.count = MAX_ENEMIES};
 	TextureAsset textureAsset = enemiesTextureAssets[BOAT];
 	Texture2D texture = LoadTexture(textureAsset.path);

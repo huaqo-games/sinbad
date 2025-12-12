@@ -1,4 +1,4 @@
-#include "appTypes.h"
+#include "app.h"
 
 const TextureAsset playerTextureAssets[PLAYER_TEX_COUNT] = {
     {"assets/ship_start.png", 16.0f, 16.0f, 0.0f}

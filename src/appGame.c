@@ -1,5 +1,4 @@
-#include "engine.h"
-#include "appTypes.h"
+#include "app.h"
 
 const ShaderAsset shaderAssets[SHADER_COUNT] = {
     {"shaders/postfx.fs"}

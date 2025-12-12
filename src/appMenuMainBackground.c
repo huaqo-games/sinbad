@@ -1,4 +1,4 @@
-#include "appTypes.h"
+#include "app.h"
 
 void InitBackground(float scrollSpeed, Background *bg, Texture2D *texture, const TextureAsset *backgroundAsset){
     bg->scrolling = 0.0f;

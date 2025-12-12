@@ -1,5 +1,4 @@
-#include "appTypes.h"
-#include "engine.h"
+#include "app.h"
 
 
 const TextureAsset birdsTextureAssets[BIRDS_TEX_COUNT] = {

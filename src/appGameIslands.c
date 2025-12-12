@@ -1,4 +1,4 @@
-#include "appTypes.h"
+#include "app.h"
 
 const TextureAsset islandsTextureAssets[ISLANDS_TEX_COUNT] = {
 	{"assets/island.png", 16.0f, 16.0f, 0.0f}

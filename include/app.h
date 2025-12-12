@@ -153,10 +153,28 @@ typedef enum
 	ENEMIES_TEX_COUNT
 } enemiesTextureID;
 
+typedef enum
+{
+	START,
+	SHIP_COUNT
+} shipID;
+
+typedef struct
+{
+	int id;
+	char* assetPath;
+	int frameSize;
+	int speed0;
+	int speed1;
+	int speed2;
+	int rotationSpeed;
+}Ship;
+
 #define MAX_ENEMIES 100
 
 typedef struct 
 {
+	Config config;
 	int count;
 	Sprite sprite[MAX_ENEMIES];
 	Animation animation[MAX_ENEMIES];

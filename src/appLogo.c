@@ -1,4 +1,4 @@
-#include "appTypes.h"
+#include "app.h"
 
 void InitLogo(LogoState *l) {
     SetTargetFPS(60);
