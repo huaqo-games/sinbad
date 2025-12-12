@@ -8,13 +8,13 @@ void ConfigApp(App* app){
     app->flags.showFPS =  GetConfigInt(&app->config, "showFPS");
 	app->flags.limitFPS = GetConfigInt(&app->config, "limitFPS");
 	app->flags.soundtrackOn = GetConfigInt(&app->config, "soundtrackOn");
-    app->window.title = GetConfigString(&app->config, "window_title");
-    app->window.width = GetConfigInt(&app->config, "window_width");
-    app->window.height = GetConfigInt(&app->config, "window_height");
+    app->window.title = GetConfigString(&app->config, "windowTitle");
+    app->window.width = GetConfigInt(&app->config, "windowWidth");
+    app->window.height = GetConfigInt(&app->config, "windowHeight");
 }
 
 void InitApp(App *app){
-    InitFont(&app->font, "assets/font.fnt");
+    InitFont(&app->font, GetConfigString(&app->config, "fontPath"));
     InitLogo(&app->logo);
     InitMenu(&app->menu);
     InitGame(app);
