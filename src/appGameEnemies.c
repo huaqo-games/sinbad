@@ -2,7 +2,7 @@
 #include "engine.h"
 
 const TextureAsset enemiesTextureAssets[ENEMIES_TEX_COUNT] = {
-	{"assets/ship_start.png", 16.0f, 16.0f, 0.0f}
+	{"assets/ship_start.png", 16.0f, 16.0f, 90.0f}
 };
 
 Enemies CreateEnemies(void){
@@ -71,7 +71,7 @@ void UpdateEnemies(Enemies *enemies){
 		UpdatePhysics(&enemies->physics[i], dir);
 		UpdateSpriteDestRec(&enemies->sprite[i], &enemies->physics[i].position);
 		float rotation = Vector2ToRotation(dir);
-		UpdateSpriteRotation(&enemies->sprite[i], rotation + 45.0f);
+		UpdateSpriteRotation(&enemies->sprite[i], rotation + 90.0f);
 		UpdateAnimation(&enemies->animation[i], GetFrameTime());
 		UpdateSpriteSourceRec(&enemies->sprite[i], &(Vector2){enemies->sprite[i].frameSize.x * enemies->animation[i].currentFrame, enemies->sprite[i].frameSize.y});
 	}
