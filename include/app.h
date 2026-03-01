@@ -1,271 +1,215 @@
 #ifndef APPTYPES_H
 #define APPTYPES_H
 
-//INCLUDES//
-#include <raylib.h>
+// INCLUDES//
 #include <engine.h>
+#include <raylib.h>
 
-//DEFINES//
-#define TEXT_COLOR_DARK (Color){ 182, 137, 98, 255}
-#define TEXT_COLOR_LIGHT (Color){ 243, 229, 194, 255}
+// DEFINES//
+#define TEXT_COLOR_DARK (Color){182, 137, 98, 255}
+#define TEXT_COLOR_LIGHT (Color){243, 229, 194, 255}
 
-//ENUMS//
-typedef enum
-{
-    MENU_CURSOR_TEX,
-    MENU_BIG_BUTTONS_TEX,
-    MENU_BOARD_TEX,
-    MENU_CLOUD_BACKGROUND,
-    MENU_CLOUD_MIDGROUND,
-    MENU_CLOUD_FOREGROUND,
-    MENU_TEX_COUNT
+// ENUMS//
+typedef enum {
+  MENU_CURSOR_TEX,
+  MENU_BIG_BUTTONS_TEX,
+  MENU_BOARD_TEX,
+  MENU_CLOUD_BACKGROUND,
+  MENU_CLOUD_MIDGROUND,
+  MENU_CLOUD_FOREGROUND,
+  MENU_TEX_COUNT
 } MenuTextureID;
 
-typedef enum
-{
-    MENU_MUSIC,
-    MENU_SOUNDTRACK_COUNT
-} MenuSoundtrackID;
+typedef enum { MENU_MUSIC, MENU_SOUNDTRACK_COUNT } MenuSoundtrackID;
 
-typedef enum
-{
-    HOVER_SOUND,
-    CLICK_SOUND,
-    MENU_SOUND_COUNT
-} MenuSoundID;
+typedef enum { HOVER_SOUND, CLICK_SOUND, MENU_SOUND_COUNT } MenuSoundID;
 
-typedef enum MenuView {
-	MAIN = 0,
-	SETTINGS = 1
-} MenuView;
+typedef enum MenuView { MAIN = 0, SETTINGS = 1 } MenuView;
 
-typedef enum
-{
-	START_SHIP,
-	PLAYER_TEX_COUNT
-} playerTextureID;
+typedef enum { START_SHIP, PLAYER_TEX_COUNT } playerTextureID;
 
-typedef enum {
-	ANCHOR,
-	SLOW_AHEAD,
-	FAST_AHEAD,
-	SPEED_COUNT
-} playerSpeedID;
+typedef enum { ANCHOR, SLOW_AHEAD, FAST_AHEAD, SPEED_COUNT } playerSpeedID;
 
+typedef enum { ISLAND, ISLANDS_TEX_COUNT } islandsTextureID;
 
-typedef enum 
-{
-	ISLAND,
-	ISLANDS_TEX_COUNT
-} islandsTextureID;
+typedef enum { POST_FX, SHADER_COUNT } ShaderID;
 
-typedef enum
-{
-	POST_FX,
-	SHADER_COUNT
-} ShaderID;
+typedef enum { BEE_AMBIENT, SOUNDTRACK_COUNT } SoundtrackID;
 
-typedef enum
-{
-    BEE_AMBIENT,
-    SOUNDTRACK_COUNT
-} SoundtrackID;
+typedef enum View { LOGO = 0, MENU = 1, GAMEPLAY = 2 } View;
 
-typedef enum View {
-    LOGO = 0,
-    MENU = 1,
-    GAMEPLAY = 2
-} View;
-
-//STRUCTS//
+// STRUCTS//
 typedef struct {
-    int frameCounter;
-    int positionX;
-    int positionY;
-    int lettersCount;
-    int topSideRecWidth;
-    int leftSideRecHeight;
-    int bottomSideRecWidth;
-    int rightSideRecHeight;
-    int state;
-    float alpha;
+  int frameCounter;
+  int positionX;
+  int positionY;
+  int lettersCount;
+  int topSideRecWidth;
+  int leftSideRecHeight;
+  int bottomSideRecWidth;
+  int rightSideRecHeight;
+  int state;
+  float alpha;
 } LogoState;
 
 typedef struct {
-    Sprite sprite;
-    float scrolling;
-    float scale;
-    float scrollSpeed;
-    Vector2 pos;
+  Sprite sprite;
+  float scrolling;
+  float scale;
+  float scrollSpeed;
+  Vector2 pos;
 } Background;
 
 typedef struct {
-    Assets assets;
-    Mouse mouse;
-    Texture2D textures[MENU_TEX_COUNT];
-    Sound sounds[MENU_SOUND_COUNT];
-    Soundtrack soundtracks[MENU_SOUNDTRACK_COUNT];
-    ImageElement board;
-    ImageButton playButton;
-    ImageButton quitButton;
-	ImageButton settingsButton;
-    int menuScale;
-    Background background;
-    Background midground;
-    Background foreground;
+  Assets assets;
+  Mouse mouse;
+  Texture2D textures[MENU_TEX_COUNT];
+  Sound sounds[MENU_SOUND_COUNT];
+  Soundtrack soundtracks[MENU_SOUNDTRACK_COUNT];
+  ImageElement board;
+  ImageButton playButton;
+  ImageButton quitButton;
+  ImageButton settingsButton;
+  int menuScale;
+  Background background;
+  Background midground;
+  Background foreground;
 } MenuMain;
 
-typedef struct 
-{
-	Button showFPS;
-	Button limitFPS;
-	Button soundtrackOn;
+typedef struct {
+  Button showFPS;
+  Button limitFPS;
+  Button soundtrackOn;
 } MenuSettings;
 
-
-typedef struct
-{
-	MenuView menuView;
-	MenuMain menuMain;	
-	MenuSettings menuSettings;
+typedef struct {
+  MenuView menuView;
+  MenuMain menuMain;
+  MenuSettings menuSettings;
 } MenuState;
 
-
-typedef struct
-{
-    Sprite sprite;
-    Rectangle bounds;
-    Shader shader;
-    float time;
+typedef struct {
+  Sprite sprite;
+  Rectangle bounds;
+  Shader shader;
+  float time;
 } Floor;
 
-typedef struct
-{
-    Sprite sprite;
-    Animation animation;
-    Physics physics;
-	float rotation;
+typedef struct {
+  Sprite sprite;
+  Animation animation;
+  Physics physics;
+  float rotation;
 } Player;
 
-typedef enum
-{
-	BOAT,
-	ENEMIES_TEX_COUNT
-} enemiesTextureID;
+typedef enum { BOAT, ENEMIES_TEX_COUNT } enemiesTextureID;
 
-typedef enum
-{
-	START,
-	SHIP_COUNT
-} shipID;
+typedef enum { START, SHIP_COUNT } shipID;
 
-typedef struct
-{
-	int id;
-	char* assetPath;
-	int frameSize;
-	int speed0;
-	int speed1;
-	int speed2;
-	int rotationSpeed;
-}Ship;
+typedef struct {
+  int id;
+  char *assetPath;
+  int frameSize;
+  int speed0;
+  int speed1;
+  int speed2;
+  int rotationSpeed;
+} Ship;
 
 #define MAX_ENEMIES 100
 
-typedef struct 
-{
-	Config config;
-	int count;
-	Sprite sprite[MAX_ENEMIES];
-	Animation animation[MAX_ENEMIES];
-	Physics physics[MAX_ENEMIES];
-	bool arrived[MAX_ENEMIES];
-	Vector2 destPos[MAX_ENEMIES];
+typedef struct {
+  Config config;
+  int count;
+  Sprite sprite[MAX_ENEMIES];
+  Animation animation[MAX_ENEMIES];
+  Physics physics[MAX_ENEMIES];
+  bool arrived[MAX_ENEMIES];
+  Vector2 destPos[MAX_ENEMIES];
 } Enemies;
 
-typedef enum 
-{
-	FLYING,
-	BIRDS_TEX_COUNT
-} birdsTextureID;
+typedef enum { FLYING, BIRDS_TEX_COUNT } birdsTextureID;
 
 #define MAX_BIRDS 100
 
 typedef struct {
-	int count;
-	Sprite sprite[MAX_BIRDS];
-	Animation animation[MAX_BIRDS];
-	Physics physics[MAX_BIRDS];
-	bool arrived[MAX_BIRDS];
-	Vector2 destPos[MAX_BIRDS];
+  int count;
+  Sprite sprite[MAX_BIRDS];
+  Animation animation[MAX_BIRDS];
+  Physics physics[MAX_BIRDS];
+  bool arrived[MAX_BIRDS];
+  Vector2 destPos[MAX_BIRDS];
 } Birds;
 
 typedef struct {
-	Sprite sprite;
-	Animation animation;
-	Physics physics;
+  Sprite sprite;
+  Animation animation;
+  Physics physics;
 } Islands;
-
-typedef struct
-{
-  	Assets assets;
-    PostProcessing postFX[SHADER_COUNT];
-    Soundtrack soundtracks[SOUNDTRACK_COUNT];
-    RenderTexture2D target;
-    Floor floor;
-  	Birds birds;
-	Enemies enemies;
-	Islands islands;
-    Mouse mouse;
-    Image image;
-} GameState;
-
-typedef struct {
-    View currentView;
-    bool running;
-    bool gameStarted;
-} State;
-
-typedef struct {
-    bool showFPS;
-	bool limitFPS;
-	bool soundtrackOn;
-} Flags;
-
-typedef struct {
-    Config config;
-    State state;
-    Flags flags;
-    Window window;
-    Font font;
-    LogoState logo;	
-    MenuState menu;
-    GameState game;
-} App;
 
 #define MAX_PROJECTILES 10
 typedef struct {
-	Physics physics[MAX_PROJECTILES];
-	bool active[MAX_PROJECTILES];
-	float radius[MAX_PROJECTILES];
-} Projectile;
+  Physics physics[MAX_PROJECTILES];
+  bool active[MAX_PROJECTILES];
+  float radius[MAX_PROJECTILES];
+} Projectiles;
 
-//FUNCTIONS//
+typedef struct {
+  Assets assets;
+  PostProcessing postFX[SHADER_COUNT];
+  Soundtrack soundtracks[SOUNDTRACK_COUNT];
+  RenderTexture2D target;
+  Floor floor;
+  Birds birds;
+  Enemies enemies;
+  Islands islands;
+  Mouse mouse;
+  Image image;
+  Projectiles projectiles;
+} GameState;
+
+typedef struct {
+  View currentView;
+  bool running;
+  bool gameStarted;
+} State;
+
+typedef struct {
+  bool showFPS;
+  bool limitFPS;
+  bool soundtrackOn;
+} Flags;
+
+typedef struct {
+  Config config;
+  State state;
+  Flags flags;
+  Window window;
+  Font font;
+  LogoState logo;
+  MenuState menu;
+  GameState game;
+} App;
+
+// FUNCTIONS//
 void InitLogo(LogoState *l);
 void UpdateLogo(LogoState *l, View *currentView, bool *running);
 void RenderLogo(const LogoState *l, Flags *flags);
 
-void InitBackground(float scrollSpeed, Background *bg, Texture2D *texture, const TextureAsset *backgroundAsset);
+void InitBackground(float scrollSpeed, Background *bg, Texture2D *texture,
+                    const TextureAsset *backgroundAsset);
 void UpdateBackground(Background *bg);
 void RenderBackground(Background *bg);
 
 void InitMenuMain(MenuMain *m);
-void UpdateMenuMain(MenuMain *m, State *state, Flags *flags, MenuView *menuView);
+void UpdateMenuMain(MenuMain *m, State *state, Flags *flags,
+                    MenuView *menuView);
 void RenderMenuMain(MenuMain *m, Font *font, const char *title, Flags *flags);
 void CleanupMenuMain(MenuMain *m);
 
 void InitMenuSettings(MenuSettings *s);
-void UpdateMenuSettings(MenuSettings *s, MenuView *menuView, State *state, Flags *flags);
+void UpdateMenuSettings(MenuSettings *s, MenuView *menuView, State *state,
+                        Flags *flags);
 void RenderMenuSettings(MenuSettings *s, Flags *flags);
 void CleanupMenuSettings(MenuSettings *s);
 
@@ -280,7 +224,7 @@ void RenderFloor(Floor *floor);
 void UnloadFloor(Floor *floor);
 
 playerSpeedID GetPlayerSpeedID(float speed);
-Player* GetPlayer(void);
+Player *GetPlayer(void);
 void CreatePlayer(void);
 void UpdatePlayer(void);
 void RenderPlayer(void);
@@ -297,6 +241,10 @@ Islands CreateIslands(void);
 void UpdateIslands(Islands *islands);
 void RenderIslands(Islands *islands);
 
+Projectiles CreateProjectiles(void);
+void UpdateProjectiles(Projectiles *projectiles);
+void RenderProjectiles(Projectiles *projectiles);
+
 void InitGame(App *app);
 void UpdateGame(App *app);
 void RenderComponents(App *app);
@@ -311,4 +259,4 @@ void InitApp(App *app);
 void UpdateApp(App *app);
 void CleanupApp(App *app);
 
-#endif //APPTYPES_H
+#endif // APPTYPES_H

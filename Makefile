@@ -20,11 +20,9 @@ C_FLAGS = \
 
 INCLUDE_FLAGS = -Iinclude
 
-EXTERNAL_ENGINE = -Iexternal/engine
 EXTERNAL_RAYGUI = -Iexternal/raygui 
 EXTERNAL_RINI = -Iexternal/rini
 EXTERNAL_FLAGS = \
-	$(EXTERNAL_ENGINE) \
 	$(EXTERNAL_RINI) \
 	$(EXTERNAL_RAYGUI)
 
