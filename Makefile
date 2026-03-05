@@ -49,7 +49,7 @@ build: $(SRC)
 	$(COMPILER) $(SRC) -o $(TARGET) $(C_FLAGS) $(INCLUDE_FLAGS) $(EXTERNAL_FLAGS) $(RAYLIB_FLAGS) 
 
 clean:
-	rm -rf bin
+	rm -rf $(TARGET)
 
 run: clean build
 	./$(TARGET)

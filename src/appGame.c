@@ -66,9 +66,9 @@ void UpdateGame(App *app) {
   UpdateFloor(&g->floor);
   UpdatePlayer();
   UpdateBirds(&g->birds);
-  UpdateEnemies(&g->enemies);
+  UpdateEnemies(&g->enemies, &g->projectiles);
   UpdateIslands(&g->islands);
-  UpdateProjectiles(&g->projectiles);
+  UpdateProjectiles(&g->projectiles, &g->enemies);
 }
 
 void RenderComponents(App *app) {

@@ -17,7 +17,7 @@ Projectiles CreateProjectiles(void) {
   return projectiles;
 }
 
-void UpdateProjectiles(Projectiles *projectiles) {
+void UpdateProjectiles(Projectiles *projectiles, Enemies *enemies) {
 
   static float lastShotTime = 0.0f;
   const float reloadTime = 1.0f;
@@ -25,6 +25,7 @@ void UpdateProjectiles(Projectiles *projectiles) {
 
   if (IsKeyDown(KEY_Q) && (currentTime - lastShotTime >= reloadTime)) {
     for (int i = 0; i < projectiles->count; i++) {
+
       if (!projectiles->active[i]) {
         projectiles->active[i] = true;
         Player *player = GetPlayer();
@@ -38,7 +39,7 @@ void UpdateProjectiles(Projectiles *projectiles) {
   }
 
   if (IsKeyDown(KEY_E) && (currentTime - lastShotTime >= reloadTime)) {
-    for (int i = 0; i < projectiles->count; i++) {
+    for (int i = 0; i < projectiles->count; i++){
       if (!projectiles->active[i]) {
         projectiles->active[i] = true;
         Player *player = GetPlayer();
@@ -52,17 +53,23 @@ void UpdateProjectiles(Projectiles *projectiles) {
   }
 
   for (int i = 0; i < projectiles->count; i++) {
-    if (projectiles->active[i]) {
-      UpdatePhysics(&projectiles->physics[i],
-                    projectiles->physics[i].direction);
+
+    if (!projectiles->active[i]) continue;
+
+    for (int j = 0; j < enemies->count; j++){
+      if (CheckCollisionCircleRec(projectiles->physics[i].position, projectiles->radius[i], enemies->sprite[j].destRec)){
+        projectiles->active[i] = false;
+      }
     }
+
+    UpdatePhysics(&projectiles->physics[i],
+                  projectiles->physics[i].direction);
   }
 }
 
 void RenderProjectiles(Projectiles *projectiles) {
   for (int i = 0; i < projectiles->count; i++) {
-    printf("Projectile Active: %d", projectiles->active[i]);
-    if (projectiles->active[i] == true) {
+    if (projectiles->active[i]) {
       DrawCircle(projectiles->physics[i].position.x,
                  projectiles->physics[i].position.y, projectiles->radius[i],
                  projectiles->color[i]);

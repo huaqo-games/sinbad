@@ -126,6 +126,7 @@ typedef struct {
   Physics physics[MAX_ENEMIES];
   bool arrived[MAX_ENEMIES];
   Vector2 destPos[MAX_ENEMIES];
+  bool alive[MAX_ENEMIES];
 } Enemies;
 
 typedef enum { FLYING, BIRDS_TEX_COUNT } birdsTextureID;
@@ -232,7 +233,7 @@ void UpdatePlayer(void);
 void RenderPlayer(void);
 
 Enemies CreateEnemies(void);
-void UpdateEnemies(Enemies *enemies);
+void UpdateEnemies(Enemies *enemies, Projectiles *projectiles);
 void RenderEnemies(Enemies *enemies);
 
 Birds CreateBirds(void);
@@ -244,7 +245,7 @@ void UpdateIslands(Islands *islands);
 void RenderIslands(Islands *islands);
 
 Projectiles CreateProjectiles(void);
-void UpdateProjectiles(Projectiles *projectiles);
+void UpdateProjectiles(Projectiles *projectiles, Enemies *enemies);
 void RenderProjectiles(Projectiles *projectiles);
 
 void InitGame(App *app);
