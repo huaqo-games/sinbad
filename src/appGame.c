@@ -68,6 +68,7 @@ void UpdateGame(App *app) {
   UpdateBirds(&g->birds);
   UpdateEnemies(&g->enemies);
   UpdateIslands(&g->islands);
+  UpdateProjectiles(&g->projectiles);
 }
 
 void RenderComponents(App *app) {
@@ -77,6 +78,7 @@ void RenderComponents(App *app) {
   RenderEnemies(&g->enemies);
   RenderBirds(&g->birds);
   RenderIslands(&g->islands);
+  RenderProjectiles(&g->projectiles);
 }
 
 void RenderGame(App *app) {

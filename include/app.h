@@ -147,11 +147,13 @@ typedef struct {
   Physics physics;
 } Islands;
 
-#define MAX_PROJECTILES 10
+#define MAX_PROJECTILES 100
 typedef struct {
+  int count;
   Physics physics[MAX_PROJECTILES];
   bool active[MAX_PROJECTILES];
   float radius[MAX_PROJECTILES];
+  Color color[MAX_PROJECTILES];
 } Projectiles;
 
 typedef struct {
