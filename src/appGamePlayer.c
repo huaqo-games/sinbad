@@ -1,5 +1,14 @@
 #include "app.h"
 
+typedef enum {
+  FLAPPING,
+  SOUND_COUNT
+}SoundID;
+
+const SoundAsset playerSoundAssets[SOUND_COUNT] = {
+  {"assets/flapping.wav"}
+};
+
 const TextureAsset playerTextureAssets[PLAYER_TEX_COUNT] = {
     {"assets/ship_start.png", 16.0f, 16.0f, 0.0f}
 };
@@ -65,7 +74,8 @@ void CreatePlayer(void)
       .sprite = playerSprite,
       .animation = playerAnimation,
       .physics = playerPhysics,
-      .rotation = rotation
+      .rotation = rotation,
+      .soundFlapping = LoadSound(playerSoundAssets[FLAPPING].path)
 	};
 
 }
@@ -74,11 +84,15 @@ void UpdatePlayer(void)
 {
 	Player* player = GetPlayer();
 	if(IsKeyPressed(KEY_W) || IsKeyPressed(KEY_UP)){
+
+
 		if(player->physics.speed < playerSpeeds[FAST_AHEAD]){
-			if(player->physics.speed < playerSpeeds[SLOW_AHEAD]){
+			if(player->physics.speed < playerSpeeds[SLOW_AHEAD]){ 
+        PlaySound(player->soundFlapping);
 				player->physics.speed = playerSpeeds[SLOW_AHEAD];
 			}
 			else {
+        PlaySound(player->soundFlapping);
 				player->physics.speed = playerSpeeds[FAST_AHEAD];
 			}
 		}
