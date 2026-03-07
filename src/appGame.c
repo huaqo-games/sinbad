@@ -1,8 +1,10 @@
 #include "app.h"
 
 const ShaderAsset shaderAssets[SHADER_COUNT] = {{"shaders/postfx.fs"}};
-
-const SoundtrackAsset soundtrackAssets[SOUNDTRACK_COUNT] = {{"assets/sea.mp3"}};
+const SoundtrackAsset soundtrackAssets[SOUNDTRACK_COUNT] = {
+  {"assets/gameplay_theme.mp3"},
+  {"assets/sea.wav"}
+};
 
 void InitGame(App *app) {
 
@@ -56,11 +58,10 @@ void UpdateGame(App *app) {
   for (int i = 0; i < SHADER_COUNT; i++) {
     UpdatePostFX(&g->postFX[i]);
   }
-  for (int i = 0; i < SOUNDTRACK_COUNT; i++) {
-    UpdateSoundtrack(&g->soundtracks[i], app->flags.soundtrackOn);
-  }
 
   UpdateMouse(&g->mouse);
+
+
   Player *player = GetPlayer();
   UpdateCamera2D(&player->physics.position, &g->mouse);
   UpdateFloor(&g->floor);
@@ -69,6 +70,7 @@ void UpdateGame(App *app) {
   UpdateEnemies(&g->enemies, &g->projectiles);
   UpdateIslands(&g->islands);
   UpdateProjectiles(&g->projectiles, &g->enemies);
+  UpdateSoundtrack(&g->soundtracks[AMBIENT], app->flags.soundtrackOn);
 }
 
 void RenderComponents(App *app) {

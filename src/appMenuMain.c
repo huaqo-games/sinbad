@@ -11,7 +11,8 @@ const TextureAsset menuTextureAssets[MENU_TEX_COUNT] = {
 
 
 const SoundtrackAsset menuSoundtrackAssets[MENU_SOUNDTRACK_COUNT] = {
-    {"assets/merrygoround.wav"}};
+    {"assets/theme.mp3"}
+};
 
 
 const SoundAsset menuSoundAssets[MENU_SOUND_COUNT] = {

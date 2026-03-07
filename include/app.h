@@ -34,7 +34,7 @@ typedef enum { ISLAND, ISLANDS_TEX_COUNT } islandsTextureID;
 
 typedef enum { POST_FX, SHADER_COUNT } ShaderID;
 
-typedef enum { BEE_AMBIENT, GAMEPLAY_THEME, SOUNDTRACK_COUNT } SoundtrackID;
+typedef enum { GAMEPLAY_THEME, AMBIENT, SOUNDTRACK_COUNT } SoundtrackID;
 
 typedef enum View { LOGO = 0, MENU = 1, GAMEPLAY = 2 } View;
 

@@ -4,25 +4,22 @@ Soundtrack LoadSoundtrack(const char* musicPath){
     Soundtrack soundtrack = {
         .music = LoadMusicStream(musicPath),
         .playing = false,
-		.paused = false
+		    .paused = false
     };
-    PlayMusicStream(soundtrack.music);
     return soundtrack; 
 }
 
-void UpdateSoundtrack(Soundtrack *soundtrack, bool playing){
+void UpdateSoundtrack(Soundtrack *soundtrack, bool shouldPlay){
 
-	if (playing && !soundtrack->playing){
-		ResumeMusicStream(soundtrack->music);
+	if (shouldPlay && !soundtrack->playing){
+		PlayMusicStream(soundtrack->music);
+    soundtrack->playing = true;
 		soundtrack->paused = false;
-	} else if (!playing && soundtrack->playing){
+	} else if (!shouldPlay && soundtrack->playing){
 		PauseMusicStream(soundtrack->music);
+    soundtrack->playing = false;
 		soundtrack->paused = true;
-	}
-
-	soundtrack->playing = playing;
-
-	if (soundtrack->playing) {
+	} else if (shouldPlay && soundtrack->playing) {
 		UpdateMusicStream(soundtrack->music);
 	}
 
