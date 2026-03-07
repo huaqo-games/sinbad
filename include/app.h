@@ -34,7 +34,7 @@ typedef enum { ISLAND, ISLANDS_TEX_COUNT } islandsTextureID;
 
 typedef enum { POST_FX, SHADER_COUNT } ShaderID;
 
-typedef enum { BEE_AMBIENT, SOUNDTRACK_COUNT } SoundtrackID;
+typedef enum { BEE_AMBIENT, GAMEPLAY_THEME, SOUNDTRACK_COUNT } SoundtrackID;
 
 typedef enum View { LOGO = 0, MENU = 1, GAMEPLAY = 2 } View;
 
@@ -100,6 +100,7 @@ typedef struct {
   Animation animation;
   Physics physics;
   float rotation;
+  Sound soundFlapping;
 } Player;
 
 typedef enum { BOAT, ENEMIES_TEX_COUNT } enemiesTextureID;
@@ -155,6 +156,8 @@ typedef struct {
   bool active[MAX_PROJECTILES];
   float radius[MAX_PROJECTILES];
   Color color[MAX_PROJECTILES];
+  Sound soundShooting[MAX_PROJECTILES];
+  Sound soundImpact[MAX_PROJECTILES];
 } Projectiles;
 
 typedef struct {
