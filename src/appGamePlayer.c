@@ -40,9 +40,8 @@ void CreatePlayer(void)
 	
 	Texture2D texture = LoadTexture(startShipAsset.path);
 	float frameWidth = startShipAsset.frameWidth;
-	float rotation = startShipAsset.rotation;
+	float rotation = (float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_ROTATION);
 	
-
 	Sprite playerSprite  = {
             .texture = texture,
             .frameSize = {frameWidth, frameWidth},
@@ -62,9 +61,8 @@ void CreatePlayer(void)
 		.animTimer = 0.0f
 	};
 
-
 	Physics playerPhysics = {
-		.position = (Vector2){0.0f,0.0f}, 
+		.position = (Vector2){(float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSX), (float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSY)}, 
 		.direction = (Vector2){0.0f, 0.0f}, 
 		.speed = playerSpeeds[ANCHOR]
 	};
@@ -127,12 +125,12 @@ void UpdatePlayer(void)
 	}
 
 	player->sprite.rotation = player->rotation;
-
 	Vector2 dir = RotationToVector2(player->rotation - 90.0f);
-
-
-    UpdatePhysics(&player->physics, dir);
-    UpdateSpriteDestRec(&player->sprite, &player->physics.position);
+  UpdatePhysics(&player->physics, dir);
+  UpdateSpriteDestRec(&player->sprite, &player->physics.position);
+  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSX, (int)player->physics.position.x);
+  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSY, (int)player->physics.position.y);
+  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_ROTATION, (int)player->rotation);
 }
 
 void RenderPlayer(void){

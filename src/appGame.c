@@ -99,7 +99,7 @@ void RenderGame(App *app) {
       (Vector2){g->mouse.screenPosition.x, g->mouse.screenPosition.y}, WHITE);
 
   Player *player = GetPlayer();
-  DrawText(TextFormat("Gold: %d", player->gold), 0.0f, 0.0f, 12.0f, YELLOW);
+  DrawText(TextFormat("Gold: %u", player->gold), 0.0f, 0.0f, 12.0f, YELLOW);
   EndTextureMode();
 
   BeginDrawing();
