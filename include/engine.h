@@ -237,5 +237,8 @@ float Vector2ToRotation(Vector2 vec);
 Vector2 GetPositionInsideRectangle(Rectangle rec);
 Vector2 GetPositionOutsideRectangle(Rectangle rec, int min, int max);
 
+bool SaveStorageValue(const char* fileName, unsigned int position, int value);
+int LoadStorageValue(const char* fileName, unsigned int position);
+
 #endif //ENGINE_H
 

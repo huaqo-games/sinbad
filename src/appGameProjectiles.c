@@ -73,6 +73,9 @@ void UpdateProjectiles(Projectiles *projectiles, Enemies *enemies) {
     for (int j = 0; j < enemies->count; j++){
       if (CheckCollisionCircleRec(projectiles->physics[i].position, projectiles->radius[i], enemies->sprite[j].destRec)){
         PlaySound(projectiles->soundImpact[i]);
+        Player *player = GetPlayer();
+        player->gold += 1;
+        SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_GOLD, player->gold);
         projectiles->active[i] = false;
       }
     }

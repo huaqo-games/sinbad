@@ -75,9 +75,9 @@ void CreatePlayer(void)
       .animation = playerAnimation,
       .physics = playerPhysics,
       .rotation = rotation,
-      .soundFlapping = LoadSound(playerSoundAssets[FLAPPING].path)
+      .soundFlapping = LoadSound(playerSoundAssets[FLAPPING].path),
+      .gold = LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_GOLD)
 	};
-
 }
 
 void UpdatePlayer(void)

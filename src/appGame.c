@@ -97,6 +97,9 @@ void RenderGame(App *app) {
       (Rectangle){0, 0, g->mouse.cursorTexture.width,
                   g->mouse.cursorTexture.height},
       (Vector2){g->mouse.screenPosition.x, g->mouse.screenPosition.y}, WHITE);
+
+  Player *player = GetPlayer();
+  DrawText(TextFormat("Gold: %d", player->gold), 0.0f, 0.0f, 12.0f, YELLOW);
   EndTextureMode();
 
   BeginDrawing();

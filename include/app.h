@@ -8,6 +8,7 @@
 // DEFINES//
 #define TEXT_COLOR_DARK (Color){182, 137, 98, 255}
 #define TEXT_COLOR_LIGHT (Color){243, 229, 194, 255}
+#define STORAGE_DATA_FILE "save1.data"
 
 // ENUMS//
 typedef enum {
@@ -37,6 +38,12 @@ typedef enum { POST_FX, SHADER_COUNT } ShaderID;
 typedef enum { GAMEPLAY_THEME, AMBIENT, SOUNDTRACK_COUNT } SoundtrackID;
 
 typedef enum View { LOGO = 0, MENU = 1, GAMEPLAY = 2 } View;
+
+typedef enum {
+  STORAGE_POSITION_GOLD = 0,
+  STORAGE_POSITION_POSX = 1,
+  STORAGE_POSITION_POSY = 2
+} StorageData;
 
 // STRUCTS//
 typedef struct {
@@ -101,6 +108,7 @@ typedef struct {
   Physics physics;
   float rotation;
   Sound soundFlapping;
+  int gold;
 } Player;
 
 typedef enum { BOAT, ENEMIES_TEX_COUNT } enemiesTextureID;
