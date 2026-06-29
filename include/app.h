@@ -247,6 +247,10 @@ Projectiles CreateProjectiles(void);
 void UpdateProjectiles(Projectiles *projectiles);
 void RenderProjectiles(Projectiles *projectiles);
 
+void CheckPlayerEnemyCollisions(Player *player, Enemies *enemies);
+void CheckEnemyEnemyCollisions(Enemies *enemies);
+void CheckProjectileEnemyCollisions(Projectiles *projectiles, Enemies *enemies);
+
 void InitGame(App *app);
 void UpdateGame(App *app);
 void RenderComponents(App *app);

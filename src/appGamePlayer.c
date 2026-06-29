@@ -57,7 +57,8 @@ void CreatePlayer(void)
 	Physics playerPhysics = {
 		.position = (Vector2){0.0f,0.0f}, 
 		.direction = (Vector2){0.0f, 0.0f}, 
-		.speed = playerSpeeds[ANCHOR]
+		.speed = playerSpeeds[ANCHOR],
+        .weight = 10.0f
 	};
 	
 	Player* player = GetPlayer();
