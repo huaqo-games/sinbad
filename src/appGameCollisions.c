@@ -1,24 +1,25 @@
 #include "app.h"
 #include <raylib.h>
 
-void CheckPlayerEnemyCollisions(Player *player, Enemies *enemies) {
+float playerCollisionRadius = 8.0f;
+float enemiesCollisionRadius = 8.0f;
+float projectilesCollisionRadius = 2.0f;
+
+void CheckPlayerCollisions(Player *player, Enemies *enemies) {
   for (int i = 0; i < enemies->count; i++) {
 
     Vector2 playerPos = player->physics.position;
     Vector2 enemiesPos = enemies->physics[i].position;
 
-    float playerRadius = 8.0f;
-    float enemiesRadius = 8.0f;
-    float minDist = playerRadius + enemiesRadius;
+    float minDist = playerCollisionRadius + enemiesCollisionRadius;
 
-    if (CheckCollisionCircles(playerPos, playerRadius, enemiesPos,
-                              enemiesRadius)) {
+    if (CheckCollisionCircles(playerPos, playerCollisionRadius, enemiesPos,
+                              enemiesCollisionRadius)) {
       float dist = GetDistanceBetweenTwoVectors(playerPos, enemiesPos);
       float overlap = minDist - dist;
 
       if (dist > 0.0f) {
-        Vector2 collisionVector = GetDirectionBetweenTwoVectors(
-            enemies->physics[i].position, player->physics.position);
+        Vector2 collisionVector = GetDirectionBetweenTwoVectors(enemies->physics[i].position, player->physics.position);
         player->physics.position.x += collisionVector.x * overlap;
         player->physics.position.y += collisionVector.y * overlap;
         Vector2 forward = RotationToVector2(player->rotation - 90.0f);
@@ -28,17 +29,17 @@ void CheckPlayerEnemyCollisions(Player *player, Enemies *enemies) {
     }
   }
 }
-void CheckEnemyEnemyCollisions(Enemies *enemies) {
+
+void CheckEnemyCollisions(Enemies *enemies) {
   for (int a = 0; a < enemies->count; a++) {
     for (int b = a + 1; b < enemies->count; b++) {
 
       Vector2 posA = enemies->physics[a].position;
       Vector2 posB = enemies->physics[b].position;
 
-      float enemiesRadius = 8.0f;
-      float minDist = enemiesRadius * 2;
+      float minDist = enemiesCollisionRadius * 2;
 
-      if (CheckCollisionCircles(posA, enemiesRadius, posB, enemiesRadius)) {
+      if (CheckCollisionCircles(posA, enemiesCollisionRadius, posB, enemiesCollisionRadius)) {
 
         Vector2 collisionVectorA = GetDirectionBetweenTwoVectors(posB, posA);
         Vector2 collisionVectorB = GetDirectionBetweenTwoVectors(posA, posB);
@@ -66,10 +67,22 @@ void CheckEnemyEnemyCollisions(Enemies *enemies) {
   }
 }
 
-void CheckProjectileEnemyCollisions(Projectiles *projectiles,
-                                    Enemies *enemies) {
-  for (int i = 0; i < projectiles->count; i++) {
-    for (int j = 0; j < enemies->count; j++) {
+void CheckProjectileCollisions(Projectiles *projectiles, Enemies *enemies, Player *player) {
+    for (int i = 0; i < projectiles->count; i++) {
+        for (int j = 0; j < enemies->count; j++) {
+            Vector2 projectilePos = projectiles->physics[i].position;
+            Vector2 enemyPos = enemies->physics[j].position;
+            Vector2 playerPos = player->physics.position;
+
+            if (CheckCollisionCircles(projectilePos, projectilesCollisionRadius, enemyPos, enemiesCollisionRadius)) {
+                Rectangle cameraRec = GetCameraRectangle();
+                enemies->physics[j].position = GetPositionOutsideRectangle(cameraRec, 100, 1000);
+            }
+
+            if (CheckCollisionCircles(projectilePos, projectilesCollisionRadius, playerPos, playerCollisionRadius)){
+                // End screen or player health reduction here
+            }
+
+        }
     }
-  }
 }

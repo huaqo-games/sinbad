@@ -69,9 +69,9 @@ void UpdateGame(App *app) {
   UpdateEnemies(&g->enemies);
   UpdateIslands(&g->islands);
   UpdateProjectiles(&g->projectiles);
-  CheckPlayerEnemyCollisions(GetPlayer(), &app->game.enemies);
-  CheckEnemyEnemyCollisions(&app->game.enemies);
-  CheckProjectileEnemyCollisions(&app->game.projectiles, &app->game.enemies);
+  CheckPlayerCollisions(GetPlayer(), &app->game.enemies);
+  CheckEnemyCollisions(&app->game.enemies);
+  CheckProjectileCollisions(&app->game.projectiles, &app->game.enemies, GetPlayer());
 }
 
 void RenderComponents(App *app) {
