@@ -1,14 +1,9 @@
 #include "app.h"
 #include "engine.h"
 
-typedef enum {
-  FLAPPING,
-  SOUND_COUNT
-}SoundID;
+typedef enum { FLAPPING, SOUND_COUNT } SoundID;
 
-const SoundAsset playerSoundAssets[SOUND_COUNT] = {
-  {"assets/flapping.wav"}
-};
+const SoundAsset playerSoundAssets[SOUND_COUNT] = {{"assets/flapping.wav"}};
 
 const TextureAsset playerTextureAssets[PLAYER_TEX_COUNT] = {
     {"assets/ship_start.png", 16.0f, 16.0f, 0.0f}};
@@ -31,73 +26,18 @@ Player *GetPlayer(void) {
   return &player;
 }
 
-<<<<<<< HEAD
-void CreatePlayer(void)
-{
-	TextureAsset startShipAsset = playerTextureAssets[START_SHIP];
-	
-	Texture2D texture = LoadTexture(startShipAsset.path);
-	float frameWidth = startShipAsset.frameWidth;
-	float rotation = (float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_ROTATION);
-	
-	Sprite playerSprite  = {
-            .texture = texture,
-            .frameSize = {frameWidth, frameWidth},
-            .sourceRec = {0.0f, 0.0f, frameWidth, frameWidth},
-            .destRec = {0.0f, 0.0f, frameWidth, frameWidth},
-            .origin = {frameWidth / 2, frameWidth / 2},
-            .rotation = rotation,
-            .color = WHITE
-	};
-=======
 void CreatePlayer(void) {
-
   InitConfig(&config, "config/player.ini");
+
   int PLAYER_HEALTH_MAX = GetConfigInt(&config, "HEALTH_MAX");
   int START_GOLD = GetConfigInt(&config, "START_GOLD");
->>>>>>> origin/pirate
 
   TextureAsset startShipAsset = playerTextureAssets[START_SHIP];
 
-<<<<<<< HEAD
-	Physics playerPhysics = {
-		.position = (Vector2){(float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSX), (float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSY)}, 
-		.direction = (Vector2){0.0f, 0.0f}, 
-		.speed = playerSpeeds[ANCHOR]
-	};
-	
-	Player* player = GetPlayer();
-	*player = (Player){
-      .sprite = playerSprite,
-      .animation = playerAnimation,
-      .physics = playerPhysics,
-      .rotation = rotation,
-      .soundFlapping = LoadSound(playerSoundAssets[FLAPPING].path),
-      .gold = LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_GOLD)
-	};
-}
-
-void UpdatePlayer(void)
-{
-	Player* player = GetPlayer();
-	if(IsKeyPressed(KEY_W) || IsKeyPressed(KEY_UP)){
-
-
-		if(player->physics.speed < playerSpeeds[FAST_AHEAD]){
-			if(player->physics.speed < playerSpeeds[SLOW_AHEAD]){ 
-        PlaySound(player->soundFlapping);
-				player->physics.speed = playerSpeeds[SLOW_AHEAD];
-			}
-			else {
-        PlaySound(player->soundFlapping);
-				player->physics.speed = playerSpeeds[FAST_AHEAD];
-			}
-		}
-	}
-=======
   Texture2D texture = LoadTexture(startShipAsset.path);
   float frameWidth = startShipAsset.frameWidth;
-  float rotation = startShipAsset.rotation;
+  float rotation =
+      (float)LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_ROTATION);
 
   Sprite playerSprite = {.texture = texture,
                          .frameSize = {frameWidth, frameWidth},
@@ -114,18 +54,29 @@ void UpdatePlayer(void)
                                .framesSpeed = 0.0f,
                                .animTimer = 0.0f};
 
-  Physics playerPhysics = {.position = (Vector2){0.0f, 0.0f},
-                           .direction = (Vector2){0.0f, 0.0f},
-                           .speed = playerSpeeds[ANCHOR],
-                           .weight = 10.0f};
+  Physics playerPhysics = {
+      .position = {(float)LoadStorageValue(STORAGE_DATA_FILE,
+                                           STORAGE_POSITION_POSX),
+                   (float)LoadStorageValue(STORAGE_DATA_FILE,
+                                           STORAGE_POSITION_POSY)},
+      .direction = {0.0f, 0.0f},
+      .speed = playerSpeeds[ANCHOR],
+      .weight = 10.0f};
 
   Player *player = GetPlayer();
-  *player = (Player){.sprite = playerSprite,
-                     .animation = playerAnimation,
-                     .physics = playerPhysics,
-                     .rotation = rotation,
-                     .health = PLAYER_HEALTH_MAX,
-                     .gold = START_GOLD};
+
+  *player = (Player){
+      .sprite = playerSprite,
+      .animation = playerAnimation,
+      .physics = playerPhysics,
+      .rotation = rotation,
+      .soundFlapping = LoadSound(playerSoundAssets[FLAPPING].path),
+      .health = PLAYER_HEALTH_MAX,
+      .gold = LoadStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_GOLD)};
+
+  if (player->gold == 0) {
+    player->gold = START_GOLD;
+  }
 }
 
 void UpdatePlayer(void) {
@@ -139,7 +90,6 @@ void UpdatePlayer(void) {
       }
     }
   }
->>>>>>> origin/pirate
 
   if (IsKeyPressed(KEY_S) || IsKeyPressed(KEY_DOWN)) {
     if (player->physics.speed > playerSpeeds[ANCHOR]) {
@@ -167,21 +117,15 @@ void UpdatePlayer(void) {
   }
 
   player->sprite.rotation = player->rotation;
-
   Vector2 dir = RotationToVector2(player->rotation - 90.0f);
-
-<<<<<<< HEAD
-	player->sprite.rotation = player->rotation;
-	Vector2 dir = RotationToVector2(player->rotation - 90.0f);
   UpdatePhysics(&player->physics, dir);
   UpdateSpriteDestRec(&player->sprite, &player->physics.position);
-  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSX, (int)player->physics.position.x);
-  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSY, (int)player->physics.position.y);
-  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_ROTATION, (int)player->rotation);
-=======
-  UpdatePhysics(&player->physics, dir);
-  UpdateSpriteDestRec(&player->sprite, &player->physics.position);
->>>>>>> origin/pirate
+  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSX,
+                   (int)player->physics.position.x);
+  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_POSY,
+                   (int)player->physics.position.y);
+  SaveStorageValue(STORAGE_DATA_FILE, STORAGE_POSITION_ROTATION,
+                   (int)player->rotation);
 }
 
 void RenderPlayer(void) {

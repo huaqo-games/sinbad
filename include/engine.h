@@ -243,12 +243,7 @@ float Cross2D(Vector2 a, Vector2 b);
 Vector2 GetPositionInsideRectangle(Rectangle rec);
 Vector2 GetPositionOutsideRectangle(Rectangle rec, int min, int max);
 
-<<<<<<< HEAD
-bool SaveStorageValue(const char* fileName, unsigned int position, int value);
-int LoadStorageValue(const char* fileName, unsigned int position);
+bool SaveStorageValue(const char *fileName, unsigned int position, int value);
+int LoadStorageValue(const char *fileName, unsigned int position);
 
-#endif //ENGINE_H
-
-=======
 #endif // ENGINE_H
->>>>>>> origin/pirate

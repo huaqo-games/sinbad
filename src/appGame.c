@@ -2,9 +2,7 @@
 
 const ShaderAsset shaderAssets[SHADER_COUNT] = {{"shaders/postfx.fs"}};
 const SoundtrackAsset soundtrackAssets[SOUNDTRACK_COUNT] = {
-  {"assets/gameplay_theme.mp3"},
-  {"assets/sea.wav"}
-};
+    {"assets/gameplay_theme.mp3"}, {"assets/sea.wav"}};
 
 void InitGame(App *app) {
 
@@ -61,23 +59,19 @@ void UpdateGame(App *app) {
 
   UpdateMouse(&g->mouse);
 
-
   Player *player = GetPlayer();
   UpdateCamera2D(&player->physics.position, &g->mouse);
   UpdateFloor(&g->floor);
   UpdatePlayer();
   UpdateBirds(&g->birds);
-  UpdateEnemies(&g->enemies, &g->projectiles);
+  UpdateEnemies(&g->enemies);
   UpdateIslands(&g->islands);
-<<<<<<< HEAD
-  UpdateProjectiles(&g->projectiles, &g->enemies);
   UpdateSoundtrack(&g->soundtracks[AMBIENT], app->flags.soundtrackOn);
-=======
-  UpdateProjectiles(&g->projectiles);
+  UpdateProjectiles(&g->projectiles, &g->enemies);
   CheckPlayerCollisions(GetPlayer(), &app->game.enemies);
   CheckEnemyCollisions(&app->game.enemies);
-  CheckProjectileCollisions(&app->game.projectiles, &app->game.enemies, GetPlayer());
->>>>>>> origin/pirate
+  CheckProjectileCollisions(&app->game.projectiles, &app->game.enemies,
+                            GetPlayer());
 }
 
 void RenderComponents(App *app) {
@@ -99,20 +93,9 @@ void RenderGame(App *app) {
   BeginMode2D(*camera);
   RenderComponents(app);
   EndMode2D();
-<<<<<<< HEAD
-  DrawTextureRec(
-      g->mouse.cursorTexture,
-      (Rectangle){0, 0, g->mouse.cursorTexture.width,
-                  g->mouse.cursorTexture.height},
-      (Vector2){g->mouse.screenPosition.x, g->mouse.screenPosition.y}, WHITE);
-
-  Player *player = GetPlayer();
-  DrawText(TextFormat("Gold: %u", player->gold), 0.0f, 0.0f, 12.0f, YELLOW);
-=======
   RenderOverlay(&g->mouse);
->>>>>>> origin/pirate
   EndTextureMode();
-  
+
   BeginDrawing();
   ClearBackground(BLACK);
   for (int i = 0; i < SHADER_COUNT; i++) {

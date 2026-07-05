@@ -108,11 +108,8 @@ typedef struct {
   Animation animation;
   Physics physics;
   float rotation;
-<<<<<<< HEAD
   Sound soundFlapping;
-=======
   int health;
->>>>>>> origin/pirate
   int gold;
 } Player;
 
@@ -249,7 +246,7 @@ void UpdatePlayer(void);
 void RenderPlayer(void);
 
 Enemies CreateEnemies(void);
-void UpdateEnemies(Enemies *enemies, Projectiles *projectiles);
+void UpdateEnemies(Enemies *enemies);
 void RenderEnemies(Enemies *enemies);
 
 Birds CreateBirds(void);
