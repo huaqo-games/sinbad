@@ -6,8 +6,10 @@ void RenderOverlay(Mouse *mouse) {
 
   // Health
   Player *player = GetPlayer();
-  const char *healthText = TextFormat("%d", player->health);
-  DrawText(healthText, 0, 0, 25, WHITE);
+  const char *text = TextFormat("Health: %i\n"
+                                "Gold: %i\n",
+                                player->health, player->gold);
+  DrawText(text, 0, 0, 25, WHITE);
 
   // Mouse
   Rectangle mouseRectangle = (Rectangle){0, 0, mouse->cursorTexture.width,

@@ -101,6 +101,7 @@ typedef struct {
   Physics physics;
   float rotation;
   int health;
+  int gold;
 } Player;
 
 typedef enum { BOAT, ENEMIES_TEX_COUNT } enemiesTextureID;
@@ -250,7 +251,8 @@ void RenderProjectiles(Projectiles *projectiles);
 
 void CheckPlayerCollisions(Player *player, Enemies *enemies);
 void CheckEnemyCollisions(Enemies *enemies);
-void CheckProjectileCollisions(Projectiles *projectiles, Enemies *enemies, Player *player);
+void CheckProjectileCollisions(Projectiles *projectiles, Enemies *enemies,
+                               Player *player);
 
 void InitGame(App *app);
 void UpdateGame(App *app);

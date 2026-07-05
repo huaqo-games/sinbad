@@ -1,135 +1,114 @@
 #include "app.h"
+#include "engine.h"
 
 const TextureAsset playerTextureAssets[PLAYER_TEX_COUNT] = {
-    {"assets/ship_start.png", 16.0f, 16.0f, 0.0f}
-};
+    {"assets/ship_start.png", 16.0f, 16.0f, 0.0f}};
 
-float playerSpeeds[SPEED_COUNT] = {
-	0.0f,
-	5.0f,
-	10.0f
-};
+float playerSpeeds[SPEED_COUNT] = {0.0f, 5.0f, 10.0f};
 
 Config config;
 
 playerSpeedID GetPlayerSpeedID(float speed) {
-    for (int i = 0; i < SPEED_COUNT; i++) {
-        if (playerSpeeds[i] == speed) {
-            return (playerSpeedID)i;
-        }
+  for (int i = 0; i < SPEED_COUNT; i++) {
+    if (playerSpeeds[i] == speed) {
+      return (playerSpeedID)i;
     }
-    return ANCHOR;
+  }
+  return ANCHOR;
 }
 
-Player* GetPlayer(void)
-{
-	static Player player;
-	return &player;
+Player *GetPlayer(void) {
+  static Player player;
+  return &player;
 }
 
-void CreatePlayer(void)
-{
+void CreatePlayer(void) {
 
   InitConfig(&config, "config/player.ini");
   int PLAYER_HEALTH_MAX = GetConfigInt(&config, "HEALTH_MAX");
+  int START_GOLD = GetConfigInt(&config, "START_GOLD");
 
-	TextureAsset startShipAsset = playerTextureAssets[START_SHIP];
-	
-	Texture2D texture = LoadTexture(startShipAsset.path);
-	float frameWidth = startShipAsset.frameWidth;
-	float rotation = startShipAsset.rotation;
+  TextureAsset startShipAsset = playerTextureAssets[START_SHIP];
 
-	Sprite playerSprite  = {
-            .texture = texture,
-            .frameSize = {frameWidth, frameWidth},
-            .sourceRec = {0.0f, 0.0f, frameWidth, frameWidth},
-            .destRec = {0.0f, 0.0f, frameWidth, frameWidth},
-            .origin = {frameWidth / 2, frameWidth / 2},
-            .rotation = rotation,
-            .color = WHITE
-	};
+  Texture2D texture = LoadTexture(startShipAsset.path);
+  float frameWidth = startShipAsset.frameWidth;
+  float rotation = startShipAsset.rotation;
 
-	Animation playerAnimation = {
-		.state = 1, 
-		.currentFrame = 0, 
-		.maxFrame = 3, 
-		.framesCounter = 0, 
-		.framesSpeed = 0.0f, 
-		.animTimer = 0.0f
-	};
+  Sprite playerSprite = {.texture = texture,
+                         .frameSize = {frameWidth, frameWidth},
+                         .sourceRec = {0.0f, 0.0f, frameWidth, frameWidth},
+                         .destRec = {0.0f, 0.0f, frameWidth, frameWidth},
+                         .origin = {frameWidth / 2, frameWidth / 2},
+                         .rotation = rotation,
+                         .color = WHITE};
 
+  Animation playerAnimation = {.state = 1,
+                               .currentFrame = 0,
+                               .maxFrame = 3,
+                               .framesCounter = 0,
+                               .framesSpeed = 0.0f,
+                               .animTimer = 0.0f};
 
-	Physics playerPhysics = {
-		.position = (Vector2){0.0f,0.0f}, 
-		.direction = (Vector2){0.0f, 0.0f}, 
-		.speed = playerSpeeds[ANCHOR],
-        .weight = 10.0f
-	};
-	
-	Player* player = GetPlayer();
-	*player = (Player){
-      .sprite = playerSprite,
-      .animation = playerAnimation,
-      .physics = playerPhysics,
-      .rotation = rotation,
-      .health = PLAYER_HEALTH_MAX
-	};
+  Physics playerPhysics = {.position = (Vector2){0.0f, 0.0f},
+                           .direction = (Vector2){0.0f, 0.0f},
+                           .speed = playerSpeeds[ANCHOR],
+                           .weight = 10.0f};
 
+  Player *player = GetPlayer();
+  *player = (Player){.sprite = playerSprite,
+                     .animation = playerAnimation,
+                     .physics = playerPhysics,
+                     .rotation = rotation,
+                     .health = PLAYER_HEALTH_MAX,
+                     .gold = START_GOLD};
 }
 
-void UpdatePlayer(void)
-{
-	Player* player = GetPlayer();
-	if(IsKeyPressed(KEY_W) || IsKeyPressed(KEY_UP)){
-		if(player->physics.speed < playerSpeeds[FAST_AHEAD]){
-			if(player->physics.speed < playerSpeeds[SLOW_AHEAD]){
-				player->physics.speed = playerSpeeds[SLOW_AHEAD];
-			}
-			else {
-				player->physics.speed = playerSpeeds[FAST_AHEAD];
-			}
-		}
-	}
+void UpdatePlayer(void) {
+  Player *player = GetPlayer();
+  if (IsKeyPressed(KEY_W) || IsKeyPressed(KEY_UP)) {
+    if (player->physics.speed < playerSpeeds[FAST_AHEAD]) {
+      if (player->physics.speed < playerSpeeds[SLOW_AHEAD]) {
+        player->physics.speed = playerSpeeds[SLOW_AHEAD];
+      } else {
+        player->physics.speed = playerSpeeds[FAST_AHEAD];
+      }
+    }
+  }
 
-	if(IsKeyPressed(KEY_S) || IsKeyPressed(KEY_DOWN)){
-		if(player->physics.speed > playerSpeeds[ANCHOR]){
-			if(player->physics.speed > playerSpeeds[SLOW_AHEAD]){
-				player->physics.speed = playerSpeeds[SLOW_AHEAD];
-			}
-			else {
-				player->physics.speed = playerSpeeds[ANCHOR];
+  if (IsKeyPressed(KEY_S) || IsKeyPressed(KEY_DOWN)) {
+    if (player->physics.speed > playerSpeeds[ANCHOR]) {
+      if (player->physics.speed > playerSpeeds[SLOW_AHEAD]) {
+        player->physics.speed = playerSpeeds[SLOW_AHEAD];
+      } else {
+        player->physics.speed = playerSpeeds[ANCHOR];
+      }
+    }
+  }
 
-			}
-		}
-	}
+  player->sprite.sourceRec.x = 16.0f * GetPlayerSpeedID(player->physics.speed);
 
-	player->sprite.sourceRec.x = 16.0f * GetPlayerSpeedID(player->physics.speed);
+  float rotationSpeed = 50.0f;
 
+  if (player->physics.speed > playerSpeeds[ANCHOR]) {
 
-	float rotationSpeed = 50.0f;
+    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
+      player->rotation -= rotationSpeed * GetFrameTime();
+    }
 
-	if (player->physics.speed > playerSpeeds[ANCHOR]){
+    if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+      player->rotation += rotationSpeed * GetFrameTime();
+    }
+  }
 
-		if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
-			player->rotation -= rotationSpeed * GetFrameTime();
-		}
+  player->sprite.rotation = player->rotation;
 
-		if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-			player->rotation += rotationSpeed * GetFrameTime();
-		}
-	}
+  Vector2 dir = RotationToVector2(player->rotation - 90.0f);
 
-	player->sprite.rotation = player->rotation;
-
-	Vector2 dir = RotationToVector2(player->rotation - 90.0f);
-
-
-    UpdatePhysics(&player->physics, dir);
-    UpdateSpriteDestRec(&player->sprite, &player->physics.position);
+  UpdatePhysics(&player->physics, dir);
+  UpdateSpriteDestRec(&player->sprite, &player->physics.position);
 }
 
-void RenderPlayer(void){
-	Player* player = GetPlayer();
-	RenderSprite(&player->sprite);
+void RenderPlayer(void) {
+  Player *player = GetPlayer();
+  RenderSprite(&player->sprite);
 }
-

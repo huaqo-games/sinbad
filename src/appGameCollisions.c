@@ -82,6 +82,7 @@ void CheckProjectileCollisions(Projectiles *projectiles, Enemies *enemies,
 
       if (CheckCollisionCircles(projectilePos, projectilesCollisionRadius,
                                 enemyPos, enemiesCollisionRadius)) {
+        player->gold += 20;
         Rectangle cameraRec = GetCameraRectangle();
         enemies->physics[j].position =
             GetPositionOutsideRectangle(cameraRec, 100, 1000);
