@@ -21,7 +21,10 @@ C_FLAGS = \
     $(C_FLAG_NO_UNKNOWN_PRAGMAS)
 
 # INCLUDE FLGAS
-INCLUDE_FLAGS = -Iinclude
+INCLUDE_FLAGS = \
+	-Iinclude \
+	$(EXTERNAL_FLAGS) \
+	$(RAYLIB_CFLAGS)
 
 # EXTERNAL FLAGS
 EXTERNAL_RAYGUI = -Iexternal/raygui
@@ -34,11 +37,13 @@ EXTERNAL_FLAGS = \
 ifeq ($(OS), Windows_NT)
 	SRC = $(wildcard src\*.c)
 	TARGET = bin\win\game.exe
-	RAYLIB_FLAGS = -I%RAYLIB% -L%RAYLIB% -lraylib -lopengl32 -lgdi32 -lwinmm
+	RAYLIB_CFLAGS = -I%RAYLIB% 
+	RAYLIB_LIBS = -L%RAYLIB% -lraylib -lopengl32 -lgdi32 -lwinmm
 else
 	SRC = $(wildcard src/*.c)
 	TARGET = bin/unix/game
-	RAYLIB_FLAGS = $(shell pkg-config --libs --cflags raylib) -lm
+	RAYLIB_CFLAGS = $(shell pkg-config --cflags raylib)
+	RAYLIB_LIBS = $(shell pkg-config --libs raylib) -lm
 endif
 
 # CREATE BIN DIR
@@ -46,7 +51,10 @@ $(shell mkdir -p bin/unix bin/win)
 
 # COMMANDS
 build: $(SRC)
-	$(COMPILER) $(SRC) -o $(TARGET) $(C_FLAGS) $(INCLUDE_FLAGS) $(EXTERNAL_FLAGS) $(RAYLIB_FLAGS) 
+	$(COMPILER) $(SRC) -o $(TARGET) \
+	$(C_FLAGS) \
+	$(INCLUDE_FLAGS) \
+	$(RAYLIB_LIBS) 
 
 clean:
 	rm -rf $(TARGET)

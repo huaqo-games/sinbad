@@ -69,8 +69,15 @@ void UpdateGame(App *app) {
   UpdateBirds(&g->birds);
   UpdateEnemies(&g->enemies, &g->projectiles);
   UpdateIslands(&g->islands);
+<<<<<<< HEAD
   UpdateProjectiles(&g->projectiles, &g->enemies);
   UpdateSoundtrack(&g->soundtracks[AMBIENT], app->flags.soundtrackOn);
+=======
+  UpdateProjectiles(&g->projectiles);
+  CheckPlayerCollisions(GetPlayer(), &app->game.enemies);
+  CheckEnemyCollisions(&app->game.enemies);
+  CheckProjectileCollisions(&app->game.projectiles, &app->game.enemies, GetPlayer());
+>>>>>>> origin/pirate
 }
 
 void RenderComponents(App *app) {
@@ -92,6 +99,7 @@ void RenderGame(App *app) {
   BeginMode2D(*camera);
   RenderComponents(app);
   EndMode2D();
+<<<<<<< HEAD
   DrawTextureRec(
       g->mouse.cursorTexture,
       (Rectangle){0, 0, g->mouse.cursorTexture.width,
@@ -100,8 +108,11 @@ void RenderGame(App *app) {
 
   Player *player = GetPlayer();
   DrawText(TextFormat("Gold: %u", player->gold), 0.0f, 0.0f, 12.0f, YELLOW);
+=======
+  RenderOverlay(&g->mouse);
+>>>>>>> origin/pirate
   EndTextureMode();
-
+  
   BeginDrawing();
   ClearBackground(BLACK);
   for (int i = 0; i < SHADER_COUNT; i++) {

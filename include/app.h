@@ -108,7 +108,11 @@ typedef struct {
   Animation animation;
   Physics physics;
   float rotation;
+<<<<<<< HEAD
   Sound soundFlapping;
+=======
+  int health;
+>>>>>>> origin/pirate
   int gold;
 } Player;
 
@@ -260,9 +264,15 @@ Projectiles CreateProjectiles(void);
 void UpdateProjectiles(Projectiles *projectiles, Enemies *enemies);
 void RenderProjectiles(Projectiles *projectiles);
 
+void CheckPlayerCollisions(Player *player, Enemies *enemies);
+void CheckEnemyCollisions(Enemies *enemies);
+void CheckProjectileCollisions(Projectiles *projectiles, Enemies *enemies,
+                               Player *player);
+
 void InitGame(App *app);
 void UpdateGame(App *app);
 void RenderComponents(App *app);
+void RenderOverlay(Mouse *mouse);
 void RenderGame(App *app);
 void CleanupGame(App *app);
 
