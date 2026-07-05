@@ -10,6 +10,8 @@ float playerSpeeds[SPEED_COUNT] = {
 	10.0f
 };
 
+Config config;
+
 playerSpeedID GetPlayerSpeedID(float speed) {
     for (int i = 0; i < SPEED_COUNT; i++) {
         if (playerSpeeds[i] == speed) {
@@ -27,12 +29,15 @@ Player* GetPlayer(void)
 
 void CreatePlayer(void)
 {
+
+  InitConfig(&config, "config/player.ini");
+  int PLAYER_HEALTH_MAX = GetConfigInt(&config, "HEALTH_MAX");
+
 	TextureAsset startShipAsset = playerTextureAssets[START_SHIP];
 	
 	Texture2D texture = LoadTexture(startShipAsset.path);
 	float frameWidth = startShipAsset.frameWidth;
 	float rotation = startShipAsset.rotation;
-	
 
 	Sprite playerSprite  = {
             .texture = texture,
@@ -66,7 +71,8 @@ void CreatePlayer(void)
       .sprite = playerSprite,
       .animation = playerAnimation,
       .physics = playerPhysics,
-      .rotation = rotation
+      .rotation = rotation,
+      .health = PLAYER_HEALTH_MAX
 	};
 
 }

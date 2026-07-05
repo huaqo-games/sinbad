@@ -61,7 +61,6 @@ void UpdateProjectiles(Projectiles *projectiles) {
 
 void RenderProjectiles(Projectiles *projectiles) {
   for (int i = 0; i < projectiles->count; i++) {
-    printf("Projectile Active: %d", projectiles->active[i]);
     if (projectiles->active[i] == true) {
       DrawCircle(projectiles->physics[i].position.x,
                  projectiles->physics[i].position.y, projectiles->radius[i],

@@ -93,13 +93,9 @@ void RenderGame(App *app) {
   BeginMode2D(*camera);
   RenderComponents(app);
   EndMode2D();
-  DrawTextureRec(
-      g->mouse.cursorTexture,
-      (Rectangle){0, 0, g->mouse.cursorTexture.width,
-                  g->mouse.cursorTexture.height},
-      (Vector2){g->mouse.screenPosition.x, g->mouse.screenPosition.y}, WHITE);
+  RenderOverlay(&g->mouse);
   EndTextureMode();
-
+  
   BeginDrawing();
   ClearBackground(BLACK);
   for (int i = 0; i < SHADER_COUNT; i++) {

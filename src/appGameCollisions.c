@@ -1,5 +1,4 @@
 #include "app.h"
-#include <raylib.h>
 
 float playerCollisionRadius = 8.0f;
 float enemiesCollisionRadius = 8.0f;
